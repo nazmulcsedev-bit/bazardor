@@ -2,7 +2,6 @@
 import { getProducts } from "@/lib/api";
 import { toBn } from "@/lib/bn";
 import { useData } from "./useData";
-
 export default function Ticker() {
   const { data } = useData(getProducts);
   if (!data?.length) return <div className="h-9 bg-green-700" />;
