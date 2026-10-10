@@ -1,4 +1,5 @@
-import products from "@/data/products.json";
+import fs from "node:fs";
+import path from "node:path";
 
 export const dynamic = "force-dynamic";
 
@@ -10,14 +11,24 @@ const BASES = [
 const TTL = 5 * 60 * 1000;
 const cache = globalThis._bzCache ?? (globalThis._bzCache = new Map());
 
-function fallback(parts, url) {
-  const [a, id] = parts;
-  if (a === "products") {
-    if (id) return products.find((p) => String(p.id) === id || p.slug === id);
-    const cat = new URL(url).searchParams.get("category");
-    return cat ? products.filter((p) => p.category === cat) : products;
+// data/products.json thakle fallback hishebe use hobe, na thakle problem nei
+function loadProducts() {
+  try {
+    const file = path.join(process.cwd(), "data", "products.json");
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch {
+    return null;
   }
-  return null; // categories: client products theke banay
+}
+
+function fallback(parts, url) {
+  const products = loadProducts();
+  if (!products) return null;
+  const [a, id] = parts;
+  if (a !== "products") return null;
+  if (id) return products.find((p) => String(p.id) === id || p.slug === id);
+  const cat = new URL(url).searchParams.get("category");
+  return cat ? products.filter((p) => p.category === cat) : products;
 }
 
 export async function GET(req, { params }) {
