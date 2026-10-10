@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-
 export function useData(fn, deps = []) {
   const [s, set] = useState({ data: null, loading: true, error: null });
   useEffect(() => {
