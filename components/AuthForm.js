@@ -35,7 +35,6 @@ export default function AuthForm({ mode }) {
       return fail("সার্ভারে সংযোগ করা যাচ্ছে না। আবার চেষ্টা করুন।");
     }
     if (error) return fail(error.message || "কিছু ভুল হয়েছে");
-
     if (up) {
       toast.success("রেজিস্ট্রেশন সফল! এবার সাইন ইন করুন");
       router.push("/signin");
