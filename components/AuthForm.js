@@ -10,13 +10,11 @@ export default function AuthForm({ mode }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
-
   const fail = (m) => {
     setErr(m);
     toast.error(m);
     setBusy(false);
   };
-
   const submit = async (e) => {
     e.preventDefault();
     setErr("");
