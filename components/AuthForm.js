@@ -45,7 +45,6 @@ export default function AuthForm({ mode }) {
       router.refresh();
     }
   };
-
   const social = (provider) =>
     signIn.social({ provider, callbackURL: "/" }).catch(() => toast.error("সোশ্যাল লগইন ব্যর্থ হয়েছে"));
 
